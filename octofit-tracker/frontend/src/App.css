@@ -1,0 +1,140 @@
+:root {
+  --octo-bg-start: #ecf7ff;
+  --octo-bg-mid: #f6f8ff;
+  --octo-bg-end: #fff4df;
+  --octo-primary: #1e6091;
+  --octo-primary-dark: #154c73;
+  --octo-accent: #f77f00;
+  --octo-heading: #12314a;
+  --octo-text: #214760;
+  --octo-link: #0f6b9a;
+  --octo-link-hover: #0b5277;
+  --octo-border: #cfdff0;
+  --octo-table-head: #dceeff;
+}
+
+.app-shell {
+  min-height: 100vh;
+  color: var(--octo-text);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(30, 96, 145, 0.18), transparent 40%),
+    radial-gradient(circle at 95% 4%, rgba(247, 127, 0, 0.16), transparent 35%),
+    linear-gradient(140deg, var(--octo-bg-start), var(--octo-bg-mid) 55%, var(--octo-bg-end));
+}
+
+.app-hero {
+  border: 1px solid rgba(30, 96, 145, 0.22);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.97), rgba(233, 246, 255, 0.92));
+}
+
+.app-nav {
+  background: rgba(255, 255, 255, 0.93);
+  border: 1px solid var(--octo-border);
+  backdrop-filter: blur(6px);
+}
+
+.app-nav .navbar-brand {
+  color: var(--octo-heading);
+}
+
+.app-nav .nav-link {
+  color: var(--octo-primary-dark);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.app-nav .nav-link:hover {
+  color: #08314f;
+  background-color: #d9ebfb;
+}
+
+.app-nav .nav-link.active {
+  color: #fff;
+  background: linear-gradient(120deg, var(--octo-primary), var(--octo-accent));
+}
+
+.app-shell h1,
+.app-shell h2,
+.app-shell h3,
+.app-shell .h3,
+.app-shell .modal-title {
+  color: var(--octo-heading);
+}
+
+.card {
+  border: 1px solid rgba(30, 96, 145, 0.12);
+}
+
+.hero-brand-wrap {
+  justify-content: flex-start;
+}
+
+.app-logo {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  border-radius: 1rem;
+  border: 1px solid rgba(30, 96, 145, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.35rem;
+  box-shadow: 0 10px 24px rgba(18, 49, 74, 0.12);
+}
+
+.app-shell a,
+.app-shell .link-primary {
+  color: var(--octo-link) !important;
+}
+
+.app-shell a:hover,
+.app-shell .link-primary:hover {
+  color: var(--octo-link-hover) !important;
+}
+
+.app-shell .btn-primary {
+  --bs-btn-bg: var(--octo-primary);
+  --bs-btn-border-color: var(--octo-primary);
+  --bs-btn-hover-bg: var(--octo-primary-dark);
+  --bs-btn-hover-border-color: var(--octo-primary-dark);
+  --bs-btn-active-bg: #0f3f61;
+  --bs-btn-active-border-color: #0f3f61;
+}
+
+.app-shell .btn-outline-primary {
+  --bs-btn-color: var(--octo-primary);
+  --bs-btn-border-color: var(--octo-primary);
+  --bs-btn-hover-bg: var(--octo-primary);
+  --bs-btn-hover-border-color: var(--octo-primary);
+  --bs-btn-hover-color: #fff;
+}
+
+.octo-table thead th {
+  color: #12314a;
+  background-color: var(--octo-table-head);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.octo-table tbody td,
+.octo-table tbody th {
+  color: #214760;
+}
+
+.octo-table tbody tr:hover {
+  --bs-table-accent-bg: rgba(30, 96, 145, 0.1);
+}
+
+.modal-json {
+  max-height: 60vh;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 991.98px) {
+  .app-logo {
+    width: 72px;
+    height: 72px;
+  }
+
+  .app-nav .navbar-collapse {
+    padding-top: 0.5rem;
+  }
+}
