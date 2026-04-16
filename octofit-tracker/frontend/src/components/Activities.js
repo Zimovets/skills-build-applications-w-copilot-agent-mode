@@ -3,7 +3,8 @@ import DataView from './DataView';
 const columns = [
   {
     header: 'User',
-    render: (item) => item?.user?.name || item?.user?.email || 'N/A',
+    render: (item) =>
+      item?.user?.name || item?.user?.email || item?.user_display || 'N/A',
   },
   {
     header: 'Type',

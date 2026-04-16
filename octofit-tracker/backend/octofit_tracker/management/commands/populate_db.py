@@ -6,10 +6,9 @@ class Command(BaseCommand):
     help = 'Populate the octofit_db database with test data'
 
     def handle(self, *args, **kwargs):
-        # Clear existing data (workaround for Djongo PK issues)
+        # Clear existing data in bulk to avoid null-PK instance delete errors.
         for model in [Activity, User, Team, Workout, Leaderboard]:
-            for obj in model.objects.all():
-                obj.delete()
+            model.objects.all().delete()
 
         # Create teams
         marvel = Team.objects.create(name='Marvel')

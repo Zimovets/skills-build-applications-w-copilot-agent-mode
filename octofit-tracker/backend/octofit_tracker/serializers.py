@@ -14,11 +14,43 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'name', 'team', 'team_id']
 
 class ActivitySerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = serializers.SerializerMethodField()
     user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='user', write_only=True)
+    user_display = serializers.SerializerMethodField()
+
+    def _safe_get_user(self, obj):
+        try:
+            return obj.user
+        except User.DoesNotExist:
+            user_id = getattr(obj, 'user_id', None)
+            if user_id:
+                return User.objects.filter(pk=user_id).first()
+
+            return None
+
+    def get_user(self, obj):
+        user = self._safe_get_user(obj)
+        if not user:
+            return None
+
+        return UserSerializer(user, context=self.context).data
+
+    def get_user_display(self, obj):
+        user = self._safe_get_user(obj)
+        if user:
+            if getattr(user, 'name', None):
+                return user.name
+            if getattr(user, 'email', None):
+                return user.email
+
+        if getattr(obj, 'user_id', None):
+            return str(obj.user_id)
+
+        return 'Unknown user'
+
     class Meta:
         model = Activity
-        fields = ['id', 'user', 'user_id', 'type', 'duration', 'date']
+        fields = ['id', 'user', 'user_id', 'user_display', 'type', 'duration', 'date']
 
 class WorkoutSerializer(serializers.ModelSerializer):
     suggested_for = TeamSerializer(many=True, read_only=True)
