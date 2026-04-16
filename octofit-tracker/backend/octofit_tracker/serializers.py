@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from bson import ObjectId
 from .models import User, Team, Activity, Workout, Leaderboard
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -18,13 +19,29 @@ class ActivitySerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='user', write_only=True)
     user_display = serializers.SerializerMethodField()
 
+    def _user_map(self):
+        if not hasattr(self, '_cached_user_map'):
+            self._cached_user_map = {str(user.id): user for user in User.objects.all()}
+        return self._cached_user_map
+
     def _safe_get_user(self, obj):
         try:
             return obj.user
         except User.DoesNotExist:
             user_id = getattr(obj, 'user_id', None)
-            if user_id:
-                return User.objects.filter(pk=user_id).first()
+            if not user_id:
+                return None
+
+            user = self._user_map().get(str(user_id))
+            if user:
+                return user
+
+            try:
+                candidate = ObjectId(f"{int(str(user_id), 16) - 1:024x}")
+            except Exception:
+                return None
+
+            return self._user_map().get(str(candidate))
 
             return None
 
